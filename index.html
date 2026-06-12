@@ -3,145 +3,236 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SECURITY CONTROL SYSTEM</title>
+<title>BLACK OPS - HOLLYWOOD SIM</title>
 
 <style>
 body{
     margin:0;
     background:black;
     color:#00ff66;
-    font-family:"Courier New", monospace;
+    font-family: monospace;
     overflow:hidden;
 }
 
-#top{
+/* شاشة البداية السينمائية */
+#intro{
+    position:fixed;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    background:black;
+}
+
+.title{
+    font-size:28px;
+    letter-spacing:2px;
+}
+
+button{
+    margin-top:20px;
+    padding:16px 30px;
+    font-size:18px;
+    background:#00ff66;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* شريط السينما */
+#cinemaBar{
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    background:#0b0b0b;
-    padding:10px;
-    border-bottom:1px solid #00ff66;
-    display:flex;
-    justify-content:space-between;
-    font-size:12px;
-}
-
-#bar{
-    width:100%;
-    height:6px;
+    height:4px;
     background:#111;
 }
 
-#progress{
+#fill{
     width:0%;
-    height:6px;
+    height:100%;
     background:#00ff66;
 }
 
-#scan{
+/* الشاشة الرئيسية */
+#terminal{
+    display:none;
     padding:20px;
-    font-size:15px;
-    line-height:1.8;
     white-space:pre-wrap;
+    line-height:1.8;
 }
 
-#final{
+/* HUD */
+#hud{
     position:fixed;
-    top:0;
-    left:0;
+    top:10px;
+    right:10px;
+    font-size:12px;
+    opacity:0.7;
+}
+
+/* خريطة سينمائية */
+#map{
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:radial-gradient(circle,#003300,#000);
+    padding:20px;
+}
+
+/* النهاية */
+#end{
+    display:none;
+    position:fixed;
     width:100%;
     height:100%;
     background:black;
-    display:none;
     justify-content:center;
     align-items:center;
     flex-direction:column;
     text-align:center;
 }
 
-#final h1{
-    color:#00ff66;
-    font-size:42px;
-}
-
-#final p{
-    color:white;
-    font-size:20px;
-}
-
 .big{
-    font-size:95px;
+    font-size:110px;
+}
+
+/* اهتزاز سينمائي */
+.shake{
+    animation: shake 0.08s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translate(0,0);}
+    25%{transform:translate(2px,-2px);}
+    50%{transform:translate(-2px,2px);}
+    75%{transform:translate(1px,1px);}
+    100%{transform:translate(0,0);}
+}
+
+/* وميض سينمائي */
+.glow{
+    text-shadow:0 0 10px #00ff66;
 }
 </style>
 </head>
 
 <body>
 
-<div id="top">
-    <div>SYSTEM v12 ACTIVE</div>
-    <div id="status">0%</div>
+<div id="hud">SYSTEM: ACTIVE • CLASSIFIED</div>
+
+<div id="cinemaBar"><div id="fill"></div></div>
+
+<!-- INTRO -->
+<div id="intro">
+    <div class="title glow">🎬 BLACK OPS - HOLLYWOOD SIMULATION</div>
+    <p>CLASSIFIED ACCESS REQUIRED</p>
+    <button onclick="start()">INITIATE SEQUENCE</button>
 </div>
 
-<div id="bar">
-    <div id="progress"></div>
+<!-- TERMINAL -->
+<div id="terminal"></div>
+
+<!-- MAP -->
+<div id="map">
+    <h2>🌍 GLOBAL TRACE NETWORK</h2>
+    <p>IP LOCATION: MOROCCO 🇲🇦</p>
+    <p>SATELLITE LINK: ACTIVE</p>
+    <p>DEVICE SIGNAL: STABLE</p>
+    <p>AI ANALYSIS: RUNNING...</p>
 </div>
 
-<div id="scan"></div>
-
-<div id="final">
-    <div class="big">😂</div>
-    <h1>تم الاختراق بنجاح!</h1>
-    <p>تم فحص الجهاز بالكامل...</p>
-    <p style="color:#00ff66;font-weight:bold;">عبد ربه يمزح معك 😎</p>
+<!-- END -->
+<div id="end">
+    <div class="big">😆</div>
+    <h1>MISSION COMPLETE</h1>
+    <p>كل ما شاهدته مجرد محاكاة سينمائية</p>
+    <p><b>عبد ربه يمزح معك 😎</b></p>
 </div>
 
 <script>
 
-const logs = [
-"Initializing secure connection...",
-"Loading encryption modules...",
-"Bypassing firewall...",
-"Accessing system kernel...",
-"Scanning storage...",
-"Found images: 4,102",
-"Found messages: 18,903",
-"Analyzing apps...",
-"Deep scan activated...",
-"Checking hidden partitions...",
-"Encrypting report...",
-"Uploading anonymous data...",
-"Final check...",
-"System compromise: FALSE",
-"Operation completed"
-];
-
-let i = 0;
-let scan = document.getElementById("scan");
-let progress = document.getElementById("progress");
-let status = document.getElementById("status");
-
 function start(){
-    if(i < logs.length){
 
-        scan.innerHTML += ">> " + logs[i] + "\n";
+    document.getElementById("intro").style.display="none";
 
-        progress.style.width = ((i+1)/logs.length)*100 + "%";
+    let fill = document.getElementById("fill");
+    let p = 0;
 
-        status.innerHTML = Math.floor(((i+1)/logs.length)*100) + "%";
+    let load = setInterval(()=>{
+
+        p += 1;
+        fill.style.width = p + "%";
+
+        if(p % 15 === 0){
+            document.body.classList.add("shake");
+            setTimeout(()=>document.body.classList.remove("shake"),120);
+        }
+
+        if(p >= 100){
+            clearInterval(load);
+            run();
+        }
+
+    },35);
+}
+
+function run(){
+
+    document.getElementById("terminal").style.display="block";
+
+    let logs = [
+        "[HOLLYWOOD SIM] initializing black ops engine...",
+        "connecting satellite network...",
+        "bypassing global firewall...",
+        "decrypting classified files...",
+        "accessing intelligence database...",
+        "scanning device memory...",
+        "photos indexed: 6,231",
+        "messages indexed: 28,104",
+        "AI behavioral scan: ACTIVE",
+        "tracking signal source...",
+        "geo-location triangulation...",
+        "security breach simulation: 94%",
+        "launching live visualization...",
+        "FINAL PHASE STARTED"
+    ];
+
+    let i = 0;
+    let box = document.getElementById("terminal");
+
+    let interval = setInterval(()=>{
+
+        box.innerHTML += ">> " + logs[i] + "\n";
+
+        if(i % 2 === 0){
+            document.body.classList.add("shake");
+            setTimeout(()=>document.body.classList.remove("shake"),100);
+        }
+
+        if(i === 5){
+            document.getElementById("map").style.display="block";
+        }
 
         i++;
 
-        setTimeout(start, 450 + Math.random()*400);
+        if(i >= logs.length){
+            clearInterval(interval);
 
-    }else{
-        setTimeout(()=>{
-            document.getElementById("final").style.display="flex";
-        },1200);
-    }
+            setTimeout(()=>{
+                document.getElementById("terminal").style.display="none";
+                document.getElementById("map").style.display="none";
+                document.getElementById("end").style.display="flex";
+            },2000);
+        }
+
+    },300);
 }
-
-start();
 
 </script>
 
