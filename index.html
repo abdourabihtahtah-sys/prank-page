@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLACK OPS - HOLLYWOOD SIM</title>
+<title>CIA CINEMATIC SYSTEM</title>
 
 <style>
 body{
@@ -14,8 +14,7 @@ body{
     overflow:hidden;
 }
 
-/* شاشة البداية السينمائية */
-#intro{
+#load{
     position:fixed;
     width:100%;
     height:100%;
@@ -23,42 +22,21 @@ body{
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    text-align:center;
-    background:black;
 }
 
-.title{
-    font-size:28px;
-    letter-spacing:2px;
-}
-
-button{
+#barBox{
+    width:85%;
+    height:10px;
+    border:1px solid #00ff66;
     margin-top:20px;
-    padding:16px 30px;
-    font-size:18px;
-    background:#00ff66;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
 }
 
-/* شريط السينما */
-#cinemaBar{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:4px;
-    background:#111;
-}
-
-#fill{
+#bar{
     width:0%;
     height:100%;
     background:#00ff66;
 }
 
-/* الشاشة الرئيسية */
 #terminal{
     display:none;
     padding:20px;
@@ -66,26 +44,6 @@ button{
     line-height:1.8;
 }
 
-/* HUD */
-#hud{
-    position:fixed;
-    top:10px;
-    right:10px;
-    font-size:12px;
-    opacity:0.7;
-}
-
-/* خريطة سينمائية */
-#map{
-    display:none;
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:radial-gradient(circle,#003300,#000);
-    padding:20px;
-}
-
-/* النهاية */
 #end{
     display:none;
     position:fixed;
@@ -99,108 +57,109 @@ button{
 }
 
 .big{
-    font-size:110px;
+    font-size:100px;
 }
 
-/* اهتزاز سينمائي */
+/* اهتزاز قوي */
 .shake{
     animation: shake 0.08s infinite;
 }
 
 @keyframes shake{
     0%{transform:translate(0,0);}
-    25%{transform:translate(2px,-2px);}
-    50%{transform:translate(-2px,2px);}
-    75%{transform:translate(1px,1px);}
+    25%{transform:translate(3px,2px);}
+    50%{transform:translate(-3px,2px);}
+    75%{transform:translate(2px,-3px);}
     100%{transform:translate(0,0);}
-}
-
-/* وميض سينمائي */
-.glow{
-    text-shadow:0 0 10px #00ff66;
 }
 </style>
 </head>
 
 <body>
 
-<div id="hud">SYSTEM: ACTIVE • CLASSIFIED</div>
+<!-- 🔊 أصوات -->
+<audio id="alarm" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<audio id="laugh" src="https://www.myinstants.com/media/sounds/evil-laugh.mp3"></audio>
+<audio id="hack" src="https://www.soundjay.com/mechanical/sounds/keyboard-typing-2.mp3"></audio>
 
-<div id="cinemaBar"><div id="fill"></div></div>
-
-<!-- INTRO -->
-<div id="intro">
-    <div class="title glow">🎬 BLACK OPS - HOLLYWOOD SIMULATION</div>
-    <p>CLASSIFIED ACCESS REQUIRED</p>
-    <button onclick="start()">INITIATE SEQUENCE</button>
+<!-- التحميل -->
+<div id="load">
+    <h2>INITIALIZING CIA CORE SYSTEM...</h2>
+    <div id="barBox"><div id="bar"></div></div>
 </div>
 
-<!-- TERMINAL -->
+<!-- التيرمينال -->
 <div id="terminal"></div>
 
-<!-- MAP -->
-<div id="map">
-    <h2>🌍 GLOBAL TRACE NETWORK</h2>
-    <p>IP LOCATION: MOROCCO 🇲🇦</p>
-    <p>SATELLITE LINK: ACTIVE</p>
-    <p>DEVICE SIGNAL: STABLE</p>
-    <p>AI ANALYSIS: RUNNING...</p>
-</div>
-
-<!-- END -->
+<!-- النهاية -->
 <div id="end">
-    <div class="big">😆</div>
-    <h1>MISSION COMPLETE</h1>
-    <p>كل ما شاهدته مجرد محاكاة سينمائية</p>
+    <div class="big">👹</div>
+    <h1>ACCESS GRANTED</h1>
+    <p>كل شيء مجرد محاكاة سينمائية</p>
     <p><b>عبد ربه يمزح معك 😎</b></p>
 </div>
 
 <script>
 
+let alarm = document.getElementById("alarm");
+let laugh = document.getElementById("laugh");
+let hack = document.getElementById("hack");
+
+window.onload = function(){
+    start();
+};
+
+function vibrate(){
+    if(navigator.vibrate){
+        navigator.vibrate([200,100,200]);
+    }
+}
+
 function start(){
 
-    document.getElementById("intro").style.display="none";
+    alarm.play();
+    vibrate();
 
-    let fill = document.getElementById("fill");
+    let bar = document.getElementById("bar");
     let p = 0;
 
     let load = setInterval(()=>{
 
-        p += 1;
-        fill.style.width = p + "%";
+        p++;
+        bar.style.width = p + "%";
 
         if(p % 15 === 0){
             document.body.classList.add("shake");
             setTimeout(()=>document.body.classList.remove("shake"),120);
+            vibrate();
         }
 
         if(p >= 100){
             clearInterval(load);
-            run();
+            runTerminal();
         }
 
     },35);
 }
 
-function run(){
+function runTerminal(){
 
+    document.getElementById("load").style.display="none";
     document.getElementById("terminal").style.display="block";
 
     let logs = [
-        "[HOLLYWOOD SIM] initializing black ops engine...",
-        "connecting satellite network...",
-        "bypassing global firewall...",
-        "decrypting classified files...",
-        "accessing intelligence database...",
+        "[CIA] secure channel opened...",
+        "bypassing firewall level 1...",
+        "bypassing firewall level 2...",
+        "injecting black ops script...",
         "scanning device memory...",
-        "photos indexed: 6,231",
-        "messages indexed: 28,104",
-        "AI behavioral scan: ACTIVE",
-        "tracking signal source...",
-        "geo-location triangulation...",
-        "security breach simulation: 94%",
-        "launching live visualization...",
-        "FINAL PHASE STARTED"
+        "photos indexed: 7,120",
+        "messages indexed: 31,004",
+        "tracking signal...",
+        "decrypting storage...",
+        "AI analysis running...",
+        "system breach simulation: 97%",
+        "FINAL STAGE ACTIVATED"
     ];
 
     let i = 0;
@@ -208,15 +167,14 @@ function run(){
 
     let interval = setInterval(()=>{
 
+        hack.play(); // صوت كتابة
+
         box.innerHTML += ">> " + logs[i] + "\n";
 
         if(i % 2 === 0){
             document.body.classList.add("shake");
+            vibrate();
             setTimeout(()=>document.body.classList.remove("shake"),100);
-        }
-
-        if(i === 5){
-            document.getElementById("map").style.display="block";
         }
 
         i++;
@@ -226,12 +184,15 @@ function run(){
 
             setTimeout(()=>{
                 document.getElementById("terminal").style.display="none";
-                document.getElementById("map").style.display="none";
                 document.getElementById("end").style.display="flex";
-            },2000);
+
+                laugh.play(); // صوت الضحك النهائي
+                vibrate();
+
+            },1500);
         }
 
-    },300);
+    },280);
 }
 
 </script>
