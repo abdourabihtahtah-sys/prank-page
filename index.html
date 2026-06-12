@@ -14,6 +14,7 @@ body{
     overflow:hidden;
 }
 
+/* تحميل */
 #load{
     position:fixed;
     width:100%;
@@ -24,6 +25,7 @@ body{
     flex-direction:column;
 }
 
+/* شريط */
 #barBox{
     width:85%;
     height:10px;
@@ -37,6 +39,7 @@ body{
     background:#00ff66;
 }
 
+/* التيرمينال */
 #terminal{
     display:none;
     padding:20px;
@@ -44,6 +47,7 @@ body{
     line-height:1.8;
 }
 
+/* النهاية */
 #end{
     display:none;
     position:fixed;
@@ -60,7 +64,7 @@ body{
     font-size:100px;
 }
 
-/* اهتزاز قوي */
+/* اهتزاز */
 .shake{
     animation: shake 0.08s infinite;
 }
@@ -71,6 +75,24 @@ body{
     50%{transform:translate(-3px,2px);}
     75%{transform:translate(2px,-3px);}
     100%{transform:translate(0,0);}
+}
+
+/* 🔒 شاشة القفل */
+#lockScreen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    color:red;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    z-index:9999;
+    font-family:monospace;
 }
 </style>
 </head>
@@ -97,6 +119,14 @@ body{
     <h1>ACCESS GRANTED</h1>
     <p>⚠ تم اختراق النظام بنجاح... لكن كل شيء مجرد مزحة 😂</p>
     <p><b>عبد ربه يمزح معك 😎</b></p>
+</div>
+
+<!-- 🔒 LOCK SCREEN -->
+<div id="lockScreen">
+    <div style="font-size:100px;">🔒</div>
+    <h1>DEVICE LOCKED</h1>
+    <p>⚠ SYSTEM CONTROL ACTIVE ⚠</p>
+    <p>ACCESS RESTRICTED</p>
 </div>
 
 <script>
@@ -188,6 +218,14 @@ function runTerminal(){
 
                 laugh.play();
                 vibrate();
+
+                // 🔒 تشغيل القفل بعد النهاية
+                setTimeout(()=>{
+                    document.getElementById("lockScreen").style.display="flex";
+                    document.body.classList.add("shake");
+                    vibrate();
+                    alarm.play();
+                }, 2000);
 
             },1500);
         }
