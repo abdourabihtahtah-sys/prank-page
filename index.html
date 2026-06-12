@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SECURE TERMINAL</title>
+<title>SECURITY CONTROL SYSTEM</title>
 
 <style>
 body{
@@ -14,20 +14,13 @@ body{
     overflow:hidden;
 }
 
-#scan{
-    padding:20px;
-    font-size:15px;
-    line-height:1.8;
-    white-space:pre-wrap;
-}
-
 #top{
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    background:#0a0a0a;
-    padding:8px;
+    background:#0b0b0b;
+    padding:10px;
     border-bottom:1px solid #00ff66;
     display:flex;
     justify-content:space-between;
@@ -46,6 +39,13 @@ body{
     background:#00ff66;
 }
 
+#scan{
+    padding:20px;
+    font-size:15px;
+    line-height:1.8;
+    white-space:pre-wrap;
+}
+
 #final{
     position:fixed;
     top:0;
@@ -62,7 +62,7 @@ body{
 
 #final h1{
     color:#00ff66;
-    font-size:40px;
+    font-size:42px;
 }
 
 #final p{
@@ -71,7 +71,7 @@ body{
 }
 
 .big{
-    font-size:90px;
+    font-size:95px;
 }
 </style>
 </head>
@@ -79,8 +79,8 @@ body{
 <body>
 
 <div id="top">
-    <div>SECURE SYSTEM v10</div>
-    <div id="status">LOADING...</div>
+    <div>SYSTEM v12 ACTIVE</div>
+    <div id="status">0%</div>
 </div>
 
 <div id="bar">
@@ -91,26 +91,29 @@ body{
 
 <div id="final">
     <div class="big">😂</div>
-    <h1>تمت العملية!</h1>
-    <p>لا يوجد أي اختراق حقيقي</p>
-    <p><strong>عبد ربه يمزح معك 😎</strong></p>
+    <h1>تم الاختراق بنجاح!</h1>
+    <p>تم فحص الجهاز بالكامل...</p>
+    <p style="color:#00ff66;font-weight:bold;">عبد ربه يمزح معك 😎</p>
 </div>
 
 <script>
 
 const logs = [
-"Connecting to secure node...",
-"Bypassing security layer 1...",
-"Bypassing security layer 2...",
-"Scanning system files...",
-"Found images: 3,214",
-"Found messages: 11,908",
-"Analyzing applications...",
-"Checking hidden folders...",
-"Running deep scan...",
+"Initializing secure connection...",
+"Loading encryption modules...",
+"Bypassing firewall...",
+"Accessing system kernel...",
+"Scanning storage...",
+"Found images: 4,102",
+"Found messages: 18,903",
+"Analyzing apps...",
+"Deep scan activated...",
+"Checking hidden partitions...",
 "Encrypting report...",
-"System status: SAFE",
-"Finalizing..."
+"Uploading anonymous data...",
+"Final check...",
+"System compromise: FALSE",
+"Operation completed"
 ];
 
 let i = 0;
@@ -118,7 +121,7 @@ let scan = document.getElementById("scan");
 let progress = document.getElementById("progress");
 let status = document.getElementById("status");
 
-function run(){
+function start(){
     if(i < logs.length){
 
         scan.innerHTML += ">> " + logs[i] + "\n";
@@ -129,7 +132,7 @@ function run(){
 
         i++;
 
-        setTimeout(run, 500 + Math.random()*400);
+        setTimeout(start, 450 + Math.random()*400);
 
     }else{
         setTimeout(()=>{
@@ -138,7 +141,7 @@ function run(){
     }
 }
 
-run();
+start();
 
 </script>
 
