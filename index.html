@@ -139,16 +139,21 @@ window.onload = function(){
     start();
 };
 
-function vibrate(){
+function vibrate(pattern = [200,100,200]){
     if(navigator.vibrate){
-        navigator.vibrate([200,100,200]);
+        navigator.vibrate(pattern);
     }
+}
+
+function flash(){
+    document.body.style.filter = "brightness(2)";
+    setTimeout(()=>document.body.style.filter="brightness(1)",120);
 }
 
 function start(){
 
     alarm.play();
-    vibrate();
+    vibrate([300,150,300]);
 
     let bar = document.getElementById("bar");
     let p = 0;
@@ -158,10 +163,11 @@ function start(){
         p++;
         bar.style.width = p + "%";
 
-        if(p % 15 === 0){
+        if(p % 12 === 0){
             document.body.classList.add("shake");
             setTimeout(()=>document.body.classList.remove("shake"),120);
-            vibrate();
+            vibrate([150,80,150]);
+            flash();
         }
 
         if(p >= 100){
@@ -169,7 +175,7 @@ function start(){
             runTerminal();
         }
 
-    },35);
+    },30);
 }
 
 function runTerminal(){
@@ -178,17 +184,21 @@ function runTerminal(){
     document.getElementById("terminal").style.display="block";
 
     let logs = [
-        "[CIA] secure channel opened...",
-        "bypassing firewall level 1...",
-        "bypassing firewall level 2...",
-        "injecting black ops script...",
-        "scanning device memory...",
-        "photos indexed: 7,120",
-        "messages indexed: 31,004",
-        "tracking signal...",
-        "decrypting storage...",
-        "AI analysis running...",
-        "system breach simulation: 97%",
+        "[CIA] establishing secure quantum tunnel...",
+        "bypassing multi-layer firewall...",
+        "node injection: 12 active routes",
+        "kernel access granted...",
+        "deep memory scan initiated...",
+        "hidden cache detected...",
+        "decrypting protected sectors...",
+        "AI behavioral model running...",
+        "⚠ anomaly detected in network stream...",
+        "re-routing global signal...",
+        "system integrity dropping...",
+        "⚠ intrusion countermeasures disabled...",
+        "FINAL OVERRIDE SEQUENCE INITIATED...",
+        "ACCESSING CORE SYSTEM...",
+        "SYSTEM COMPROMISE: 99%",
         "FINAL STAGE ACTIVATED"
     ];
 
@@ -200,11 +210,17 @@ function runTerminal(){
         hack.play();
 
         box.innerHTML += ">> " + logs[i] + "\n";
+        box.scrollTop = box.scrollHeight;
 
         if(i % 2 === 0){
             document.body.classList.add("shake");
-            vibrate();
-            setTimeout(()=>document.body.classList.remove("shake"),100);
+            vibrate([120,60,120]);
+            setTimeout(()=>document.body.classList.remove("shake"),90);
+        }
+
+        if(logs[i] && logs[i].includes("FINAL")){
+            flash();
+            vibrate([400,200,400]);
         }
 
         i++;
@@ -213,24 +229,25 @@ function runTerminal(){
             clearInterval(interval);
 
             setTimeout(()=>{
+
                 document.getElementById("terminal").style.display="none";
                 document.getElementById("end").style.display="flex";
 
                 laugh.play();
-                vibrate();
+                vibrate([500,200,500]);
 
-                // 🔒 تشغيل القفل بعد النهاية
                 setTimeout(()=>{
                     document.getElementById("lockScreen").style.display="flex";
                     document.body.classList.add("shake");
-                    vibrate();
+                    flash();
+                    vibrate([600,300,600]);
                     alarm.play();
                 }, 2000);
 
-            },1500);
+            },1200);
         }
 
-    },280);
+    },220);
 }
 
 </script>
